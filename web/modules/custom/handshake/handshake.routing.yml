@@ -1,7 +1,0 @@
-handshake.showhandshakejobslist:
-  path: '/myhandshakepath/showjobs'
-  defaults: 
-    _controller: '\Drupal\handshake\Controller\SecondController::showHandshakeJobsList'
-    _title: 'On Campus Student Employment'
-  requirements:
-    _permission: 'access content'
