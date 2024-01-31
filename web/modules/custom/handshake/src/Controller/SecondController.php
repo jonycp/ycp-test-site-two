@@ -68,4 +68,13 @@ class SecondController extends ControllerBase{
       return $strEvent;
     }
 
+    public function showUser() {
+        
+      /* $user = \Drupal::currentUser(); */
+      
+      return [
+        '#type' => 'markup',
+        '#markup' => t('<h3>later this will be user info<h3>'),
+      ];
+    }
 }

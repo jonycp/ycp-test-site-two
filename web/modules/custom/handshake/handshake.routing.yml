@@ -6,3 +6,10 @@ handshake.showhandshakejobslist:
   requirements:
     _permission: 'access content'
 
+handshake.showuser:
+  path: '/handshakeapp/showuser'
+  defaults: 
+    _controller: '\Drupal\handshake\Controller\SecondController::showUser'
+    _title: 'Current User Information'
+  requirements:
+    _permission: 'access content'
