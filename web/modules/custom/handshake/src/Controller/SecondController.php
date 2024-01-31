@@ -11,7 +11,7 @@
 * In this example ControllerBase is an abstract class.
 */
 
-use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Controller\ControllerBase; 
 
 class SecondController extends ControllerBase{
 
@@ -68,4 +68,4 @@ class SecondController extends ControllerBase{
       return $strEvent;
     }
 
- }
+}
