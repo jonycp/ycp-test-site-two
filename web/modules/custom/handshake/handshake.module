@@ -8,13 +8,12 @@
 
 /**
 * Implements hook_cron().  This will not work, because cron runs anonymously.
-*
+* $user = \Drupal::currentUser()->getEmail();  
+* $email = 'EMAIL between =>' . $user . '<= these ';
 */
 
-function handshake_cron() {
-	$user = \Drupal::currentUser()->getEmail();  
-  $email = 'EMAIL should appear between =>' . $user . '<= these ';
-  \Drupal::messenger()->addMessage(t('Hello from handshake module cron hook! and my email: ' . $email . ' ;D'));  
+function mymodule_cron() {
+  \Drupal::messenger()->addMessage(t('Hello from handshake module cron hook! D'));  
 }
 
 
