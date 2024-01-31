@@ -12,7 +12,7 @@
 * $email = 'EMAIL between =>' . $user . '<= these ';
 */
 
-function mymodule_cron() {
+function handshake_cron() {
   \Drupal::messenger()->addMessage(t("Hello from handshake module cron hook! ;D"));  
 }
 
