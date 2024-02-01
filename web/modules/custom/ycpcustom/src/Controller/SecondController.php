@@ -17,7 +17,7 @@ class SecondController extends ControllerBase{
 
     public function showHandshakeJobsList() {
       $handshake = 'https://app.joinhandshake.com/external_feeds/17966/public.rss?token=VoCI9Q52nygV-CWnC9rn__oB7yQrmFfknNsatG31w3lA7SLpOk7zmw';
-      $eventsListItems = '';
+      $jobs = '';
       $ch=curl_init();
       if($ch){
         curl_setopt($ch, CURLOPT_URL, $handshake);
@@ -29,44 +29,30 @@ class SecondController extends ControllerBase{
             $rss = simplexml_load_string($feed);
             if($rss!==FALSE){
               foreach($rss->channel->item as $rssItem) {
-                $eventsListItems .= $this->outputEvent($rssItem);              
+                $jobs .= $this->output_job($rssItem);              
               } // foreach
             } // XML ok
           } // curl info 200
         } // curl info not false
         curl_close($ch);
-       // echo $eventsListItems;  
+       // echo $jobs;  
       } // curl initialized ok
       return [
         '#type' => 'markup',
-        '#markup' => t($eventsListItems),
+        '#markup' => t($jobs),
       ];
     }
     
-    private function outputEvent($item){
-      $brtag = '<br/>';
-      $br2tag = '<br/><br/>';
-      $brtagpos = 0;
-      $br2tagpos = 0;
-      $dtpos = 0;
-      $descpos=0;
-      $descendpos=0;
+    private function output_job($item){
 
-    // Get employer and expires positions to parse these from the description.
-    // Use divs instead of h's or p's due to existing styles' padding.
-    // Expires length is Expires: 04/01/2024 17 
+      $desc = substr(strval($item->description),0,200);
+      $title = strval($item->title);
+      $link = strval($item->link);
 
-      $emprPos = strpos($item->description, 'Employer:');
-      $exprPos = strpos($item->description, 'Expires');
-      $outEmpr = substr($item->description, $emprPos, $exprPos - 4);
-      $outExpr = substr($item->description, $exprPos, 17);
-      $outDesc = substr($item->description, $exprPos + 23);
-      
-      $strEvent  = '<div style="margin-top:15px;"><a href="' . trim(strval($item->link)) . '" style="font-weight:500;">' . trim(strval($item->title)) . '</a></div>';
-      $strEvent .= '<div>' . trim(strval($outDesc)) . '...</div>';
-      
-      return $strEvent;
-    }
+      $strJob='<p><a href="'.$link.'" style="font-weight:bold;">'.$title.'</a><br />'.$desc.'...</p>';
+
+      return $strJob;
+}
 
     public function showUser() {
         
