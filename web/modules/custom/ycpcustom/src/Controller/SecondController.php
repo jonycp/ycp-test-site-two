@@ -1,18 +1,18 @@
 <?php
 /**
 * Generates markup to be displayed. Functionality in this Controller is
-* wired to Drupal in handshake.routing.yml.
+* wired to Drupal in ycpcustom.routing.yml.
 */
 
-  namespace Drupal\handshake\Controller; 
+  namespace Drupal\ycpcustom\Controller; 
 
 /**
 * Add use statements next.
 * In this example ControllerBase is an abstract class.
 */
 
-use Drupal\Core\Controller\ControllerBase; 
-
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 class SecondController extends ControllerBase{
 
     public function showHandshakeJobsList() {
@@ -70,11 +70,59 @@ class SecondController extends ControllerBase{
 
     public function showUser() {
         
-      /* $user = \Drupal::currentUser(); */
+      $user = \Drupal::currentUser();
       
-      return [
-        '#type' => 'markup',
-        '#markup' => t('<h3>later this will be user info<h3>'),
-      ];
+      if($user->isAuthenticated()){
+        $email = $user->getEmail();
+        return [
+          '#type' => 'markup',
+          '#markup' => t('<h3>You are authenticated on localhost. Your email is ' . $email . '<h3>'),
+        ];
+      } else {
+        return [
+          '#type' => 'markup',
+          '#markup' => t('<h3>User is not authenticated.<h3>'),
+        ];
+      }
+    }
+
+/**  Dr does not allow redirects by default.
+  * Error message:
+  * Redirects to external URLs are not allowed by default, 
+  * use \Drupal\Core\Routing\TrustedRedirectResponse for it.
+  */
+    public function redirectWCOnline() { 
+    
+      $user = \Drupal::currentUser();
+      
+      if($user->isAuthenticated()){
+        
+        // $email = $user->getEmail();  
+        
+        $email = 'pmiller11@ycp.edu';
+        
+        $securityKey = 'vIt!899k@HAbjR$0Fxef';
+       
+        // date(I) is 1 during DST and 0 otherwise
+        $hours = date('H') - date('I');
+
+        // zero-pad the hours
+        $hours = str_pad($hours,2,"0",STR_PAD_LEFT);
+
+        // '' below are ' and ' together not " 
+        $token = md5($securityKey.''. $hours .''.date('m').''.date('d').''.strtolower($email));
+
+        $url = 'https://ycp.mywconline.com/backdoor.php?email=' . $email . '&token=' . $token;
+        return $response = new TrustedRedirectResponse($url);
+        
+      } else {
+        
+          return [
+            '#type' => 'markup',
+            '#markup' => t('<h3>User is not authenticated.<h3>'),
+          ];      
+          
+      }
     }
 }
+  

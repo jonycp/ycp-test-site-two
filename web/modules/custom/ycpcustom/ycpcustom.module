@@ -7,13 +7,10 @@
 
 
 /**
-* Implements hook_cron(). Getting user will not work, because cron runs anonymously.
-* $user = \Drupal::currentUser()->getEmail();  
-* $email = 'EMAIL between =>' . $user . '<= these ';
+* Implements hook_cron(). 
 */
-
-function handshake_cron() {
-  \Drupal::messenger()->addMessage(t("Hello from handshake module cron hook! ;D"));  
+function ycpcustom_cron() {
+  \Drupal::messenger()->addMessage(t('Hello from YCP Custom cron hook!'));  
 }
 
 

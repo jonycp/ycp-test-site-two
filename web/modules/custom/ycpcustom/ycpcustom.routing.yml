@@ -1,0 +1,24 @@
+ycpcustom.showhandshakejobslist:
+  path: '/ycpcustom/showjobs'
+  defaults: 
+    _controller: '\Drupal\ycpcustom\Controller\SecondController::showHandshakeJobsList'
+    _title: 'On Campus Student Employment'
+  requirements:
+    _permission: 'access content'
+    
+ycpcustom.showuser:
+  path: '/ycpcustom/showuser'
+  defaults: 
+    _controller: '\Drupal\ycpcustom\Controller\SecondController::showUser'
+    _title: 'User Information'
+  requirements:
+    _permission: 'access content'
+
+ycpcustom.redirectwconline:
+  path: '/ycpcustom/wconline'
+  defaults: 
+    _controller: '\Drupal\ycpcustom\Controller\SecondController::redirectWCOnline'
+    _title: 'User Information'
+  requirements:
+    _permission: 'access content'
+

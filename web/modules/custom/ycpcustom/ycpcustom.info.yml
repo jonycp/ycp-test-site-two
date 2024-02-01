@@ -1,0 +1,5 @@
+name: 'YCP Custom module'
+type: module
+core_version_requirement: ^10
+description: 'YCP Custom functionality'
+package: 'YCP Custom'
