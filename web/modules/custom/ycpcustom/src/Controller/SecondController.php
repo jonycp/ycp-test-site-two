@@ -62,7 +62,7 @@ class SecondController extends ControllerBase{
         $email = $user->getEmail();
         return [
           '#type' => 'markup',
-          '#markup' => t('<h3>You are authenticated on localhost. Your email is ' . $email . '<h3>'),
+          '#markup' => t('<h3>You are an authenticated user. Your email is ' . $email . '<h3>'),
         ];
       } else {
         return [
