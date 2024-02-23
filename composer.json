@@ -22,7 +22,7 @@
         "cweagans/composer-patches": "^1.7",
         "drush/drush": "^11 || ^12",
         "drupal/admin_toolbar": "^3.4",
-        "drupal/bootstrap": "^3.29"
+        "drupal/bootstrap": "^3.30"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
