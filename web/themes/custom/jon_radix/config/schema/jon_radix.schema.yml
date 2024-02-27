@@ -1,0 +1,5 @@
+# Schema for the configuration files of the jon_radix theme.
+
+jon_radix.settings:
+  type: theme_settings
+  label: 'jon_radix settings'

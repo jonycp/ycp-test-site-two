@@ -1,0 +1,412 @@
+{% block content %}
+<script>
+   function gpacalc_calcit() { // This variable determines how many courses to display
+   
+   var pclasses = 7;
+   
+   var c = 0;
+   var cred = 0;
+   var qpoints = 0;
+   var cum_qpoints = 0;
+   var cum_chours = 0;
+   var cum_check = 0;
+   var tot_credits = 1;
+   var tot_points = 0;
+   var rep_mult = 1;
+   // Set to true (1) assuming that all grades are NA until proven otherwise
+   var NACheck = 1;
+   var div_base = 1;
+   var fgpa = 0;
+   var dsgpa = "";
+   var dcgpa = "&nbsp;";
+   
+   var cum_qpoints = 0;
+   var cum_chours = 0;
+   
+   // Check for blank in the total quality points and credit hours.
+   if ((document.getElementById("tqpoints").value != "") || (document.getElementById("tchours").value != "")) {
+   
+   cum_qpoints = parseFloat(document.getElementById("tqpoints").value);
+   cum_chours = parseFloat(document.getElementById("tchours").value);
+   // Have to make sure we get numbers for quality points and credits
+   if ((!(isNaN(cum_qpoints))) && (!(isNaN(cum_chours)))) {
+   cum_check = 1;
+   } // if( (!(isNan(cum_qpoints))) && (!(isNaN(cum_chours))) ) {
+   } //
+   
+   for (c = 0; c < pclasses; c++) {
+   
+   if (document.getElementById("cgrade" + c).value != 'NA') {
+   cgrade = parseFloat(document.getElementById("cgrade" + c).value);
+   cred = parseFloat(document.getElementById("credits" + c).value);
+   
+   rep_mult = 1;
+   if (!(isNaN(cgrade))) {
+   NACheck = 0;
+   
+   tot_credits = tot_credits + cred;
+   
+   qpoints = (cgrade * cred);
+   tot_points = tot_points + qpoints;
+   
+   } // if (!(isNaN(cgrade))) {
+   } // if(document.getElementById("cgrade"+c).value != 'NA') {
+   
+   } // for(c=0;c<$pclasses;c++) {
+   
+   if (tot_credits > 1) {
+   tot_credits = tot_credits - 1;
+   }
+   
+   fgpa = tot_points / tot_credits;
+   fgpa = (fgpa * 100);
+   fgpa = fgpa / 100;
+   
+   // Does the final caculation and makes
+   // sure we get trailing zeros.
+   //          fgpa = fgpa.toFixed(3);
+   dsgpa = new String(fgpa);
+   
+   // Only if use cummulative
+   if (cum_check == 1) {
+   if (tot_credits == 1) {
+   tot_credits = 0;
+   } // if(tot_credits == 1) {
+   
+   tot_credits = tot_credits + cum_chours;
+   tot_points = tot_points + cum_qpoints;
+   fgpa = tot_points / tot_credits;
+   fgpa = (fgpa * 100);
+   fgpa = fgpa / 100;
+   
+   // Does the final caculation and makes
+   // sure we get trailing zeros.
+   fgpa = fgpa.toFixed(3);
+   dcgpa = new String(fgpa);
+   dcgpa = dcgpa.substr(0, 4);
+   } // if(cum_check == 1) {
+   
+   document.getElementById("dcgpa").innerHTML = dcgpa;
+   document.getElementById("dsgpa").innerHTML = dsgpa.substr(0, 4);
+   
+   }
+   // function calcit() {
+   
+   // Only number allowed in quality points and credits fields
+   function gpacalc_isNumberKey(evt) {
+   var charCode = (evt.which) ? evt.which : event.keyCode
+   var key_check = 1;
+   // alert(charCode);
+   if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46) 
+   return false;
+   
+   
+   return true;
+   }
+</script>
+<style>
+   select {
+   font-size: 1em;
+   }
+   input[type=text] {
+   font-size: 1em;
+   }
+</style>
+<div>
+   <p>The GPA calculator can be used by students and advisors to compute the possible semester and cumulative Grade Point Average (GPA)s of the course(s) that are being taken for the first time (repeated courses will not be able to calculated correctly using the GPA calculator). If you are retaking any courses, please consult your academic advisor and/or Back on Track mentor.</p>
+   <p>This calculator should be used only as a resource to help you understand how GPAs are calculated. The results are not official because the calculator is not tied to the student’s academic record.</p>
+   <p style="font-weight:bold;">Instructions:</p>
+   <p>To use the GPA calculator, you will first need to retrieve your completed GPA Hours and Accumulated Quality Points. The directions to find those calculations on your unofficial transcript are below.</p>
+   <ol>
+      <li>Log in to MyYCP and click on the YCPWeb
+         icon
+      </li>
+      <li>Select
+         Student Services > Student Records > Academic Transcript
+      </li>
+      <li>Select
+         your Transcript Level > Submit
+      </li>
+      <li>Scroll
+         down to the semester that immediately precedes the one for which you are
+         making calculations (e.g., Fall 2023 when calculating Spring 2024 GPAs)
+      </li>
+      <li>Look
+         for "Term Totals" and note your cumulative GPA Hours and Quality
+         Points 
+      </li>
+      <li>Scroll
+         to the upcoming term. Note the course(s) you are taking and credit amounts
+         for each course.
+      </li>
+   </ol>
+   <p>After collecting the GPA Hours, Quality Points, and credit amounts for your currently enrolled course(s), enter the totals in the corresponding field on the GPA calculator. You will have to click the Calculate button each time you make a change in the Grade column as the calculator will not automatically recalculate.</p>
+</div>
+<div style="width:50%;">
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:10px;">GPA Hours:</div>
+         <div style="display:inline-block;"><input type="text" id="tchours" name="tchours" onkeypress="return gpacalc_isNumberKey(event)" size="5"/></div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:10px;">Accumulated Quality Points:</div>
+         <div style="display:inline-block;"><input type="text" id="tqpoints" name="tqpoints" onkeypress="return gpacalc_isNumberKey(event)" size="5"/></div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:10px;">Grade</div>
+         <div style="display:inline-block;">Credits</div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:20px;">Course 1:</div>
+         <div style="display:inline-block;margin-right:10px;">
+            <select id="cgrade0" name="cgrade0">
+               <option value="NA">NA</option>
+               <option value="4.00">4.00</option>
+               <option value="3.50">3.50</option>
+               <option value="3.00">3.00</option>
+               <option value="2.50">2.50</option>
+               <option value="2.00">2.00</option>
+               <option value="1.00">1.00</option>
+               <option value="0.00">0.00</option>
+            </select>
+         </div>
+         <div style="display:inline-block;">
+            <select id="credits0" name="credits0">
+               <option value="9">9</option>
+               <option value="8">8</option>
+               <option value="7">7</option>
+               <option value="6">6</option>
+               <option value="5">5</option>
+               <option value="4">4</option>
+               <option value="3" selected="">3</option>
+               <option value="2">2</option>
+               <option value="1">1</option>
+               <option value="0.5">0.5</option>
+            </select>
+         </div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:20px;">Course 2:</div>
+         <div style="display:inline-block;margin-right:10px;">
+            <select id="cgrade1" name="cgrade1">
+               <option value="NA">NA</option>
+               <option value="4.00">4.00</option>
+               <option value="3.50">3.50</option>
+               <option value="3.00">3.00</option>
+               <option value="2.50">2.50</option>
+               <option value="2.00">2.00</option>
+               <option value="1.00">1.00</option>
+               <option value="0.00">0.00</option>
+            </select>
+         </div>
+         <div style="display:inline-block;">
+            <select id="credits1" name="credits1">
+               <option value="9">9</option>
+               <option value="8">8</option>
+               <option value="7">7</option>
+               <option value="6">6</option>
+               <option value="5">5</option>
+               <option value="4">4</option>
+               <option value="3" selected="">3</option>
+               <option value="2">2</option>
+               <option value="1">1</option>
+               <option value="0.5">0.5</option>
+            </select>
+         </div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:20px;">Course 3:</div>
+         <div style="display:inline-block;margin-right:10px;">
+            <select id="cgrade2" name="cgrade2">
+               <option value="NA">NA</option>
+               <option value="4.00">4.00</option>
+               <option value="3.50">3.50</option>
+               <option value="3.00">3.00</option>
+               <option value="2.50">2.50</option>
+               <option value="2.00">2.00</option>
+               <option value="1.00">1.00</option>
+               <option value="0.00">0.00</option>
+            </select>
+         </div>
+         <div style="display:inline-block;">
+            <select id="credits2" name="credits2">
+               <option value="9">9</option>
+               <option value="8">8</option>
+               <option value="7">7</option>
+               <option value="6">6</option>
+               <option value="5">5</option>
+               <option value="4">4</option>
+               <option value="3" selected="">3</option>
+               <option value="2">2</option>
+               <option value="1">1</option>
+               <option value="0.5">0.5</option>
+            </select>
+         </div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:20px;">Course 4:</div>
+         <div style="display:inline-block;margin-right:10px;">
+            <select id="cgrade3" name="cgrade3">
+               <option value="NA">NA</option>
+               <option value="4.00">4.00</option>
+               <option value="3.50">3.50</option>
+               <option value="3.00">3.00</option>
+               <option value="2.50">2.50</option>
+               <option value="2.00">2.00</option>
+               <option value="1.00">1.00</option>
+               <option value="0.00">0.00</option>
+            </select>
+         </div>
+         <div style="display:inline-block;">
+            <select id="credits3" name="credits3">
+               <option value="9">9</option>
+               <option value="8">8</option>
+               <option value="7">7</option>
+               <option value="6">6</option>
+               <option value="5">5</option>
+               <option value="4">4</option>
+               <option value="3" selected="">3</option>
+               <option value="2">2</option>
+               <option value="1">1</option>
+               <option value="0.5">0.5</option>
+            </select>
+         </div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:20px;">Course 5:</div>
+         <div style="display:inline-block;margin-right:10px;">
+            <select id="cgrade4" name="cgrade4">
+               <option value="NA">NA</option>
+               <option value="4.00">4.00</option>
+               <option value="3.50">3.50</option>
+               <option value="3.00">3.00</option>
+               <option value="2.50">2.50</option>
+               <option value="2.00">2.00</option>
+               <option value="1.00">1.00</option>
+               <option value="0.00">0.00</option>
+            </select>
+         </div>
+         <div style="display:inline-block;">
+            <select id="credits4" name="credits4">
+               <option value="9">9</option>
+               <option value="8">8</option>
+               <option value="7">7</option>
+               <option value="6">6</option>
+               <option value="5">5</option>
+               <option value="4">4</option>
+               <option value="3" selected="">3</option>
+               <option value="2">2</option>
+               <option value="1">1</option>
+               <option value="0.5">0.5</option>
+            </select>
+         </div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:20px;">Course 6:</div>
+         <div style="display:inline-block;margin-right:10px;">
+            <select id="cgrade5" name="cgrade5">
+               <option value="NA">NA</option>
+               <option value="4.00">4.00</option>
+               <option value="3.50">3.50</option>
+               <option value="3.00">3.00</option>
+               <option value="2.50">2.50</option>
+               <option value="2.00">2.00</option>
+               <option value="1.00">1.00</option>
+               <option value="0.00">0.00</option>
+            </select>
+         </div>
+         <div style="display:inline-block;">
+            <select id="credits5" name="credits5">
+               <option value="9">9</option>
+               <option value="8">8</option>
+               <option value="7">7</option>
+               <option value="6">6</option>
+               <option value="5">5</option>
+               <option value="4">4</option>
+               <option value="3" selected="">3</option>
+               <option value="2">2</option>
+               <option value="1">1</option>
+               <option value="0.5">0.5</option>
+            </select>
+         </div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:20px;">Course 7:</div>
+         <div style="display:inline-block;margin-right:10px;">
+            <select id="cgrade6" name="cgrade6">
+               <option value="NA">NA</option>
+               <option value="4.00">4.00</option>
+               <option value="3.50">3.50</option>
+               <option value="3.00">3.00</option>
+               <option value="2.50">2.50</option>
+               <option value="2.00">2.00</option>
+               <option value="1.00">1.00</option>
+               <option value="0.00">0.00</option>
+            </select>
+         </div>
+         <div style="display:inline-block;">
+            <select id="credits6" name="credits6">
+               <option value="9">9</option>
+               <option value="8">8</option>
+               <option value="7">7</option>
+               <option value="6">6</option>
+               <option value="5">5</option>
+               <option value="4">4</option>
+               <option value="3" selected="">3</option>
+               <option value="2">2</option>
+               <option value="1">1</option>
+               <option value="0.5">0.5</option>
+            </select>
+         </div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%; text-align:right;">
+      <form>
+         <input type="button" onclick="gpacalc_calcit()" value="Calculate" />
+      </form>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:10px;">Semester GPA:</div>
+         <div style="display:inline-block;" id="dsgpa">0.00</div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+   <div style="float:left;padding:10px;width:100%;">
+      <div style="float:right;">
+         <div style="display:inline-block;margin-right:10px;">Cumulative GPA:</div>
+         <div style="display:inline-block;" id="dcgpa">0.00</div>
+      </div>
+   </div>
+   <div style="clear:both;"></div>
+</div>
+{% endblock %}
