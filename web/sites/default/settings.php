@@ -32,4 +32,5 @@ $local_settings = __DIR__ . "/settings.local.php";
 if (file_exists($local_settings)) {
   include $local_settings;
 }
-$settings['hash_salt'] = '4PFsQ-ZXEdiiH6lGV5KSAbx1oBOnvR9WNupTPB8iafQGSuOQn0Y--5s9zBmLJiPRuqzb4shQBQ';
+
+$settings['hash_salt'] = 'F05ygfW1zB7W5FmyVJTMwmkgiGuRONUTv7k392NCUZdvhqOcuOfxO-fKtQ4YK2L4qAA0-e5ATw';
