@@ -83,9 +83,9 @@ class SecondController extends ControllerBase{
       
       if($user->isAuthenticated()){
         
-        // $email = $user->getEmail();  
+         $email = $user->getEmail();  
         
-        $email = 'pmiller11@ycp.edu';
+        // $email = 'pmiller11@ycp.edu';
         
         $securityKey = 'vIt!899k@HAbjR$0Fxef';
        
