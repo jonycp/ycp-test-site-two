@@ -25,7 +25,8 @@
         "drupal/bootstrap": "^3.30",
         "drupal/components": "^3.0@beta",
         "drupal/radix": "^5.0",
-        "drupal/tailwindcss": "^5.0@alpha"
+        "drupal/tailwindcss": "^5.0@alpha",
+        "drupal/stable": "^2.0"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
