@@ -24,7 +24,8 @@
         "drupal/admin_toolbar": "^3.4",
         "drupal/bootstrap": "^3.30",
         "drupal/components": "^3.0@beta",
-        "drupal/radix": "^5.0"
+        "drupal/radix": "^5.0",
+        "drupal/tailwindcss": "^5.0@alpha"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
