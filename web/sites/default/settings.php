@@ -33,4 +33,16 @@ if (file_exists($local_settings)) {
   include $local_settings;
 }
 
-$settings['hash_salt'] = 'F05ygfW1zB7W5FmyVJTMwmkgiGuRONUTv7k392NCUZdvhqOcuOfxO-fKtQ4YK2L4qAA0-e5ATw';
+$settings['hash_salt'] = 'YvtMm0GubrSFxP-6kY3XZKgKkvKInb3tcE732DOAuoJ-dpwyDavB2egpCPSjt1uok6LK0KNJVA';
+$databases['default']['default'] = array (
+  'database' => 'pantheon_local',
+  'username' => 'drupal_db_user',
+  'password' => 'J$tA2sotLxvQQfLflsmYF8%Vg2p6UB',
+  'prefix' => '',
+  'host' => 'localhost',
+  'port' => '3306',
+  'isolation_level' => 'READ COMMITTED',
+  'driver' => 'mysql',
+  'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+  'autoload' => 'core/modules/mysql\\src\\Driver\\Database\\mysql\\',
+);
